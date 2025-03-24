@@ -1,12 +1,11 @@
 package com.jobskillportal.jobskillportalbackend.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.time.LocalDate;
 
 @Entity
 @Data
@@ -21,5 +20,16 @@ public class Job {
     private String location;
     private String description;
     private String skillsRequired;
+    private String experienceRequired;
+    private String industry;
+    private String salary;
     private boolean active;
+    private LocalDate publishDate;
+
+    @PrePersist
+    public void setAppliedDate() {
+        if (this.publishDate == null) {
+            this.publishDate = LocalDate.now();
+        }
+    }
 } 

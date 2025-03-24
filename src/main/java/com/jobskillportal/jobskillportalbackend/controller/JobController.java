@@ -8,9 +8,10 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin(origins = "http://localhost:5176", allowCredentials = "true")
 @RestController
-@RequestMapping("/jobs")
-@CrossOrigin("*")  // Allow frontend access
+@RequestMapping("/api/jobs")
+  // Allow frontend access
 public class JobController {
 
     @Autowired

@@ -23,7 +23,10 @@ public class JobServiceImpl implements JobService {
         job.setCompany(jobDTO.getCompany());
         job.setLocation(jobDTO.getLocation());
         job.setDescription(jobDTO.getDescription());
+        job.setIndustry(jobDTO.getIndustry());
+        job.setSalary(jobDTO.getSalary());
         job.setSkillsRequired(jobDTO.getSkillsRequired());
+        job.setExperienceRequired(jobDTO.getExperienceRequired());
         job.setActive(jobDTO.isActive());
         return job;
     }
@@ -34,7 +37,10 @@ public class JobServiceImpl implements JobService {
         jobDTO.setCompany(job.getCompany());
         jobDTO.setLocation(job.getLocation());
         jobDTO.setDescription(job.getDescription());
+        jobDTO.setIndustry(job.getIndustry());
+        jobDTO.setSalary(job.getSalary());
         jobDTO.setSkillsRequired(job.getSkillsRequired());
+        jobDTO.setExperienceRequired(job.getExperienceRequired());
         jobDTO.setActive(job.isActive());
         return jobDTO;
     }
@@ -61,7 +67,10 @@ public class JobServiceImpl implements JobService {
             job.setCompany(jobDTO.getCompany());
             job.setLocation(jobDTO.getLocation());
             job.setDescription(jobDTO.getDescription());
+            job.setIndustry(jobDTO.getIndustry());
+            job.setSalary(jobDTO.getSalary());
             job.setSkillsRequired(jobDTO.getSkillsRequired());
+            job.setExperienceRequired(jobDTO.getExperienceRequired());
             job.setActive(jobDTO.isActive());
             Job updatedJob = jobRepository.save(job);
             return convertToDTO(updatedJob);
