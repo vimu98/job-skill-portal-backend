@@ -1,11 +1,17 @@
 package com.jobskillportal.jobskillportalbackend.controller;
 
 import com.jobskillportal.jobskillportalbackend.dto.JobDTO;
+import com.jobskillportal.jobskillportalbackend.entity.Job;
+import com.jobskillportal.jobskillportalbackend.service.JobMatchingService;
 import com.jobskillportal.jobskillportalbackend.service.JobService;
+import com.jobskillportal.jobskillportalbackend.service.ResumeParserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.util.Collections;
 import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:5176", allowCredentials = "true")
@@ -16,6 +22,10 @@ public class JobController {
 
     @Autowired
     private JobService jobService;
+
+    @Autowired
+    private JobMatchingService jobMatchingService;
+
 
     // Create Job
     @PostMapping("/create")
@@ -42,4 +52,17 @@ public class JobController {
         jobService.deleteJob(id);
         return ResponseEntity.noContent().build();
     }
+
+    @PostMapping("/match-jobs")
+    public ResponseEntity<List<Job>> matchJobs(@RequestParam("file") MultipartFile file) {
+        try {
+            String parsedText = ResumeParserService.parseResume(file);
+            List<Job> matchingJobs = jobMatchingService.findMatchingJobs(parsedText);
+            return ResponseEntity.ok(matchingJobs);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Collections.emptyList());
+        }
+    }
+
+
 }
