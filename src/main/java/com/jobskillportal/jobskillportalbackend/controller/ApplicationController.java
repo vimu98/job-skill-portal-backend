@@ -27,10 +27,11 @@ public class ApplicationController {
             @RequestParam("file") MultipartFile file,
             @RequestParam("jobId") Long jobId,
             @RequestParam("applicantId") Long applicantId,
+            @RequestParam("fileUrl") String fileUrl,
             @RequestParam("applicationStatus") String applicationStatus) throws IOException {
 
         // Upload the file and get the file URL
-        String fileUrl = fileUploadService.uploadFile(file);
+       // String fileUrl = fileUploadService.uploadFile(file);
 
         // Create an ApplicationDTO object and save it
         ApplicationDTO applicationDTO = new ApplicationDTO();

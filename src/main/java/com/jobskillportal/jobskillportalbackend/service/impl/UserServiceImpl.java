@@ -45,6 +45,6 @@ public class UserServiceImpl implements UserService {
             throw new RuntimeException("Invalid email or password");
         }
 
-        return jwtUtil.generateToken(userLoginDTO.getEmail());
+        return jwtUtil.generateToken(userLoginDTO.getEmail(), userOptional.get().getRole());
     }
 }
