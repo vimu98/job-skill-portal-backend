@@ -1,17 +1,14 @@
 package com.jobskillportal.jobskillportalbackend.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Entity
-@Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Entity
+@Data
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,5 +16,6 @@ public class User {
     private String name;
     private String email;
     private String password;
-    private String role;  // "JOB_SEEKER", "EMPLOYER", "TRAINER", "ADMIN"
+    private String role;
+    private String imageUrl; // Stores the Cloudinary image URL
 }

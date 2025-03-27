@@ -1,11 +1,13 @@
 package com.jobskillportal.jobskillportalbackend.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
-public class UserRegisterDTO {
+@AllArgsConstructor
+public class UserDTO {
+    private Long id;
     private String name;
     private String email;
-    private String password;
     private String role;
 }

@@ -16,12 +16,14 @@ public class JwtUtil {
         return Keys.hmacShaKeyFor(SECRET_KEY.getBytes());
     }
 
-    public String generateToken(String email, String role) {
+    public String generateToken(String email, String role, Long id) {
         return Jwts.builder()
                 .setSubject(email)
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
-                .addClaims(Map.of("role", role))
+                .addClaims(Map.of(
+                        "role", role,
+                        "id", id ))
                 .signWith(getSigningKey(), SignatureAlgorithm.HS256)
                 .compact();
     }

@@ -1,7 +1,9 @@
 package com.jobskillportal.jobskillportalbackend.controller;
 
+import com.jobskillportal.jobskillportalbackend.dto.UserDTO;
 import com.jobskillportal.jobskillportalbackend.dto.UserRegisterDTO;
 import com.jobskillportal.jobskillportalbackend.dto.UserLoginDTO;
+import com.jobskillportal.jobskillportalbackend.dto.UserUpdateDTO;
 import com.jobskillportal.jobskillportalbackend.service.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -25,4 +27,15 @@ public class AuthController {
     public ResponseEntity<String> login(@RequestBody UserLoginDTO userLoginDTO) {
         return ResponseEntity.ok(userService.loginUser(userLoginDTO));
     }
+
+    @GetMapping("/user/{id}")
+    public ResponseEntity<UserDTO> getUser(@PathVariable Long id) {
+        return ResponseEntity.ok(userService.getUserById(id));
+    }
+
+    @PutMapping("/user/{id}")
+    public ResponseEntity<String> updateUser(@PathVariable Long id, @RequestBody UserUpdateDTO userUpdateDTO) {
+        return ResponseEntity.ok(userService.updateUser(id, userUpdateDTO));
+    }
+
 }

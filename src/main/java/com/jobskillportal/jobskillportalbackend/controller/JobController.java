@@ -54,7 +54,7 @@ public class JobController {
     }
 
     @PostMapping("/match-jobs")
-    public ResponseEntity<List<Job>> matchJobs(@RequestParam("file") MultipartFile file) {
+    public ResponseEntity<List<Job>> matchJobs(@RequestBody String file) {
         try {
             String parsedText = ResumeParserService.parseResume(file);
             List<Job> matchingJobs = jobMatchingService.findMatchingJobs(parsedText);

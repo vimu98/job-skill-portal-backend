@@ -12,7 +12,10 @@ import org.springframework.web.multipart.MultipartFile;
 import org.xml.sax.SAXException;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
 import java.net.URI;
+import java.net.URL;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
@@ -24,16 +27,28 @@ public class ResumeParserService {
       // Load API Key from application.properties
     private static String OPENAI_API_KEY = "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";
 
-    public static String parseResume(MultipartFile file) throws IOException, InterruptedException, TikaException, SAXException {
-        String text = extractTextFromResume(file);
+    public static String parseResume(String file) throws IOException, InterruptedException, TikaException, SAXException {
+        String text = extractTextFromResume("https://res.cloudinary.com/dnxqj3ooq/raw/upload/v1743070114/pdf_files/Skills.pdf");
         return callOpenAiApi(text);
     }
 
-    private static String extractTextFromResume(MultipartFile file) throws IOException, TikaException, SAXException {
+    private static InputStream downloadFile(String fileUrl) throws IOException {
+        URL url = new URL(fileUrl);
+        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+        connection.setRequestMethod("GET");
+        connection.setConnectTimeout(5000);
+        connection.setReadTimeout(5000);
+        return connection.getInputStream();
+    }
+
+
+    private static String extractTextFromResume(String fileUrl) throws IOException, TikaException, SAXException {
         // Use Apache Tika for text extraction
+        InputStream fileInputStream = downloadFile(fileUrl);
+
         BodyContentHandler handler = new BodyContentHandler(-1); // Unlimited text length
         Metadata metadata = new Metadata();
-        new AutoDetectParser().parse(file.getInputStream(), handler, metadata, new ParseContext());
+        new AutoDetectParser().parse(fileInputStream, handler, metadata, new ParseContext());
         return handler.toString();
     }
 
