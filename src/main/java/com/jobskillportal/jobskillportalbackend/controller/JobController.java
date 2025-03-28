@@ -1,6 +1,7 @@
 package com.jobskillportal.jobskillportalbackend.controller;
 
 import com.jobskillportal.jobskillportalbackend.dto.JobDTO;
+import com.jobskillportal.jobskillportalbackend.dto.ResumeUrlDTO;
 import com.jobskillportal.jobskillportalbackend.entity.Job;
 import com.jobskillportal.jobskillportalbackend.service.JobMatchingService;
 import com.jobskillportal.jobskillportalbackend.service.JobService;
@@ -54,14 +55,21 @@ public class JobController {
     }
 
     @PostMapping("/match-jobs")
-    public ResponseEntity<List<Job>> matchJobs(@RequestBody String file) {
+    public ResponseEntity<List<Job>> matchJobs(@RequestBody ResumeUrlDTO resumeUrlDTO) {
         try {
-            String parsedText = ResumeParserService.parseResume(file);
+
+            String parsedText = ResumeParserService.parseResume(resumeUrlDTO);
             List<Job> matchingJobs = jobMatchingService.findMatchingJobs(parsedText);
             return ResponseEntity.ok(matchingJobs);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Collections.emptyList());
         }
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<JobDTO> getJobById(@PathVariable Long id) {
+        JobDTO jobDTO = jobService.getJobById(id);
+        return jobDTO != null ? ResponseEntity.ok(jobDTO) : ResponseEntity.notFound().build();
     }
 
 

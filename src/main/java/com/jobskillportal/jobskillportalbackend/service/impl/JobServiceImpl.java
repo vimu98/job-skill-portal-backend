@@ -28,11 +28,13 @@ public class JobServiceImpl implements JobService {
         job.setSkillsRequired(jobDTO.getSkillsRequired());
         job.setExperienceRequired(jobDTO.getExperienceRequired());
         job.setActive(jobDTO.isActive());
+        job.setPublishDate(jobDTO.getPublishDate());
         return job;
     }
 
     private JobDTO convertToDTO(Job job) {
         JobDTO jobDTO = new JobDTO();
+        jobDTO.setId(job.getId());
         jobDTO.setTitle(job.getTitle());
         jobDTO.setCompany(job.getCompany());
         jobDTO.setLocation(job.getLocation());
@@ -42,6 +44,7 @@ public class JobServiceImpl implements JobService {
         jobDTO.setSkillsRequired(job.getSkillsRequired());
         jobDTO.setExperienceRequired(job.getExperienceRequired());
         jobDTO.setActive(job.isActive());
+        jobDTO.setPublishDate(job.getPublishDate());
         return jobDTO;
     }
 
@@ -63,6 +66,7 @@ public class JobServiceImpl implements JobService {
         Optional<Job> existingJob = jobRepository.findById(id);
         if (existingJob.isPresent()) {
             Job job = existingJob.get();
+            job.setId(jobDTO.getId());
             job.setTitle(jobDTO.getTitle());
             job.setCompany(jobDTO.getCompany());
             job.setLocation(jobDTO.getLocation());
@@ -72,6 +76,7 @@ public class JobServiceImpl implements JobService {
             job.setSkillsRequired(jobDTO.getSkillsRequired());
             job.setExperienceRequired(jobDTO.getExperienceRequired());
             job.setActive(jobDTO.isActive());
+            job.setPublishDate(jobDTO.getPublishDate());
             Job updatedJob = jobRepository.save(job);
             return convertToDTO(updatedJob);
         }
@@ -82,4 +87,12 @@ public class JobServiceImpl implements JobService {
     public void deleteJob(Long id) {
         jobRepository.deleteById(id);
     }
+
+
+
+    public JobDTO getJobById(Long id) {
+        Optional<Job> job = jobRepository.findById(id);
+        return job.map(this::convertToDTO).orElse(null);
+    }
+
 }

@@ -4,6 +4,7 @@ import com.jobskillportal.jobskillportalbackend.dto.UserDTO;
 import com.jobskillportal.jobskillportalbackend.dto.UserLoginDTO;
 import com.jobskillportal.jobskillportalbackend.dto.UserRegisterDTO;
 import com.jobskillportal.jobskillportalbackend.dto.UserUpdateDTO;
+import org.springframework.web.multipart.MultipartFile;
 
 public interface UserService {
     String registerUser(UserRegisterDTO userRegisterDTO);
@@ -13,4 +14,5 @@ public interface UserService {
     UserDTO getUserById(Long userId);
 
     String updateUser(Long userId, UserUpdateDTO userUpdateDTO);
+
 }

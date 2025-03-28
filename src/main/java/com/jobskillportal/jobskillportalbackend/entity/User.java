@@ -17,5 +17,7 @@ public class User {
     private String email;
     private String password;
     private String role;
-    private String imageUrl; // Stores the Cloudinary image URL
+    private String profilePicture;
+
+
 }

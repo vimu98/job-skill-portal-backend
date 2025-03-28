@@ -1,6 +1,7 @@
 package com.jobskillportal.jobskillportalbackend.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.jobskillportal.jobskillportalbackend.dto.ResumeUrlDTO;
 import org.apache.tika.exception.TikaException;
 import org.apache.tika.metadata.Metadata;
 import org.apache.tika.parser.AutoDetectParser;
@@ -27,8 +28,8 @@ public class ResumeParserService {
       // Load API Key from application.properties
     private static String OPENAI_API_KEY = "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";
 
-    public static String parseResume(String file) throws IOException, InterruptedException, TikaException, SAXException {
-        String text = extractTextFromResume("https://res.cloudinary.com/dnxqj3ooq/raw/upload/v1743070114/pdf_files/Skills.pdf");
+    public static String parseResume(ResumeUrlDTO resumeUrlDTO) throws IOException, InterruptedException, TikaException, SAXException {
+        String text = extractTextFromResume(resumeUrlDTO.getResumeUrl());
         return callOpenAiApi(text);
     }
 
