@@ -16,4 +16,6 @@ public interface JobService {
     void deleteJob(Long id);
 
     JobDTO getJobById(Long id);
+
+    List<JobDTO> getJobsByCompanyIds(List<Long> companyIds);
 }

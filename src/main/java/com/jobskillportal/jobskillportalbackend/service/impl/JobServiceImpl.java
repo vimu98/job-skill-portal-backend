@@ -20,7 +20,7 @@ public class JobServiceImpl implements JobService {
     private Job convertToEntity(JobDTO jobDTO) {
         Job job = new Job();
         job.setTitle(jobDTO.getTitle());
-        job.setCompany(jobDTO.getCompany());
+        job.setCompanyId(jobDTO.getCompanyId());
         job.setLocation(jobDTO.getLocation());
         job.setDescription(jobDTO.getDescription());
         job.setIndustry(jobDTO.getIndustry());
@@ -36,7 +36,7 @@ public class JobServiceImpl implements JobService {
         JobDTO jobDTO = new JobDTO();
         jobDTO.setId(job.getId());
         jobDTO.setTitle(job.getTitle());
-        jobDTO.setCompany(job.getCompany());
+        jobDTO.setCompanyId(job.getCompanyId());
         jobDTO.setLocation(job.getLocation());
         jobDTO.setDescription(job.getDescription());
         jobDTO.setIndustry(job.getIndustry());
@@ -68,7 +68,7 @@ public class JobServiceImpl implements JobService {
             Job job = existingJob.get();
             job.setId(jobDTO.getId());
             job.setTitle(jobDTO.getTitle());
-            job.setCompany(jobDTO.getCompany());
+            job.setCompanyId(jobDTO.getCompanyId());
             job.setLocation(jobDTO.getLocation());
             job.setDescription(jobDTO.getDescription());
             job.setIndustry(jobDTO.getIndustry());
@@ -88,7 +88,10 @@ public class JobServiceImpl implements JobService {
         jobRepository.deleteById(id);
     }
 
-
+    public List<JobDTO> getJobsByCompanyIds(List<Long> companyIds) {
+        List<Job> jobs = jobRepository.findByCompanyIdIn(companyIds);
+        return jobs.stream().map(this::convertToDTO).collect(Collectors.toList());
+    }
 
     public JobDTO getJobById(Long id) {
         Optional<Job> job = jobRepository.findById(id);

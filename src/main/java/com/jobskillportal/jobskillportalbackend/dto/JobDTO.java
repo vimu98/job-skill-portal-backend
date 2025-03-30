@@ -8,7 +8,7 @@ import java.time.LocalDate;
 public class JobDTO {
     private Long id;
     private String title;
-    private String company;
+    private Long companyId;
     private String location;
     private String description;
     private String skillsRequired;

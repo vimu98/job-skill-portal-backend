@@ -79,7 +79,11 @@ public class UserServiceImpl implements UserService {
             User user = userOptional.get();
             user.setName(userUpdateDTO.getName());
             user.setEmail(userUpdateDTO.getEmail());
-            user.setProfilePicture(userUpdateDTO.getProfilePicture());
+            user.setPassword(passwordEncoder.encode(userUpdateDTO.getPassword()));
+
+            if(userUpdateDTO.getProfilePicture() != null) {
+                user.setProfilePicture(userUpdateDTO.getProfilePicture());
+            }
 
             userRepository.save(user);
             return "User updated successfully!";

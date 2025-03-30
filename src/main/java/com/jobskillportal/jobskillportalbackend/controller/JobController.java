@@ -12,8 +12,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @CrossOrigin(origins = "http://localhost:5176", allowCredentials = "true")
 @RestController
@@ -71,6 +73,22 @@ public class JobController {
         JobDTO jobDTO = jobService.getJobById(id);
         return jobDTO != null ? ResponseEntity.ok(jobDTO) : ResponseEntity.notFound().build();
     }
+
+    @GetMapping("/companies")
+    public ResponseEntity<List<JobDTO>> getJobsByCompanyIds(@RequestParam String companyIds) {
+        try {
+            List<Long> companyIdsList = Arrays.stream(companyIds.split(","))
+                    .map(Long::parseLong)
+                    .collect(Collectors.toList());
+            List<JobDTO> jobDTOs = jobService.getJobsByCompanyIds(companyIdsList);
+            return jobDTOs.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(jobDTOs);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(Collections.emptyList()); // Handle invalid input
+        }
+    }
+
+
+
 
 
 }

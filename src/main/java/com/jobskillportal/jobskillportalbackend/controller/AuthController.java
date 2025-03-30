@@ -62,12 +62,12 @@ public class AuthController {
                                              @RequestPart("name") String name,
                                              @RequestPart("email") String email,
                                              @RequestPart("password") String password,
-                                             @RequestPart("role") String role,
                                              @RequestPart(value = "profilePicture", required = false) MultipartFile profilePicture) {
 
         UserUpdateDTO userUpdateDTO = new UserUpdateDTO();
         userUpdateDTO.setName(name);
         userUpdateDTO.setEmail(email);
+        userUpdateDTO.setPassword(password);
 
         if (profilePicture != null && !profilePicture.isEmpty()) {
             String profilePictureUrl = imageUploadService.uploadFile(profilePicture); // Upload image

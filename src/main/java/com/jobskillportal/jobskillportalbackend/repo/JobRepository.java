@@ -9,5 +9,7 @@ import java.util.List;
 
 @Repository
 public interface JobRepository extends JpaRepository<Job, Long> {
-    List<Job> findBySkillsRequiredIn(List<String> skills);
+
+    List<Job> findByCompanyIdIn(List<Long> companyIds);
+
 }

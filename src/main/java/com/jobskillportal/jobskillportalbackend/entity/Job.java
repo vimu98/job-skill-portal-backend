@@ -16,7 +16,7 @@ public class Job {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String title;
-    private String company;
+    private Long companyId;
     private String location;
     private String description;
     private String skillsRequired;
