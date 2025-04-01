@@ -20,9 +20,21 @@ public class DialogflowController {
     public Map<String, String> detectIntent(@RequestBody Map<String, Object> request) {
         String sessionId = request.getOrDefault("sessionId", UUID.randomUUID().toString()).toString();
         String message = request.get("message").toString();
-        Map<String, String> parameters = (Map<String, String>) request.get("parameters");
 
-        String response = dialogflowService.detectIntent(sessionId, message, parameters);
+        // Extract jobId if present in parameters
+        Long jobId = null;
+        if (request.containsKey("parameters")) {
+            Map<String, String> parameters = (Map<String, String>) request.get("parameters");
+            if (parameters.containsKey("jobId")) {
+                try {
+                    jobId = Long.parseLong(parameters.get("jobId"));
+                } catch (NumberFormatException e) {
+                    // Handle invalid jobId format
+                }
+            }
+        }
+
+        String response = dialogflowService.detectIntent(sessionId, message, jobId);
         return Map.of("response", response);
     }
 }
