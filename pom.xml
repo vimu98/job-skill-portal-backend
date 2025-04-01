@@ -116,6 +116,12 @@
 			<version>2.0.27</version>
 		</dependency>
 
+		<dependency>
+			<groupId>com.google.cloud</groupId>
+			<artifactId>google-cloud-dialogflow</artifactId>
+			<version>4.47.0</version> <!-- Use the latest version -->
+		</dependency>
+
 	</dependencies>
 
 	<build>

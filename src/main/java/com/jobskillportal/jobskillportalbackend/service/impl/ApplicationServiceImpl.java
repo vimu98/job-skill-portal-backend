@@ -38,11 +38,15 @@ public class ApplicationServiceImpl implements ApplicationService {
         // Find the application to update
         Application existingApplication = applicationRepository.findById(applicationId).orElse(null);
         if (existingApplication != null) {
-            existingApplication.setJobId(applicationDTO.getJobId());
-            existingApplication.setApplicantId(applicationDTO.getApplicantId());
-            existingApplication.setResumeUrl(applicationDTO.getResumeUrl());
+            if(applicationDTO.getJobId() != null ) {
+                existingApplication.setJobId(applicationDTO.getJobId());
+                existingApplication.setApplicantId(applicationDTO.getApplicantId());
+                existingApplication.setResumeUrl(applicationDTO.getResumeUrl());
+                existingApplication.setApplicationStatus(applicationDTO.getApplicationStatus());
+                existingApplication.setAppliedDate(applicationDTO.getAppliedDate());
+            }
             existingApplication.setApplicationStatus(applicationDTO.getApplicationStatus());
-            existingApplication.setAppliedDate(applicationDTO.getAppliedDate());
+
             applicationRepository.save(existingApplication);
             // Return the updated application data as DTO
             applicationDTO.setApplicationId(existingApplication.getApplicationId());
